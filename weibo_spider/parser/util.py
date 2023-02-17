@@ -118,3 +118,20 @@ def string_to_int(string):
     elif string.endswith(u'亿'):
         string = float(string[:-1]) * 100000000
     return int(string)
+
+
+def extract_embedded_url(href):
+    res = ''
+    locations = []
+    index = href.find('https')
+
+    while index != -1:
+        locations.append(index)
+        index = href.find('https', index + 1)
+
+    if len(locations) == 2:
+        raw = href[locations[1]:]
+        raw = raw.replace("%3A", ":")
+        res = raw.replace("%2F", "/")
+
+    return res
